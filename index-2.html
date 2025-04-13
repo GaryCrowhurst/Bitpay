@@ -1,0 +1,2740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="theme-color" content="#3563E9">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>BootPay - Revolutionizing Boot Fair Payments</title>
+    <style>
+        :root {
+            --primary: #3563E9;
+            --primary-light: #4d7aff;
+            --primary-dark: #1d4ed8;
+            --primary-gradient: linear-gradient(135deg, #3563E9 0%, #2451cc 100%);
+            --secondary: #FF6B35;
+            --secondary-light: #ff8c5e;
+            --secondary-dark: #e55a27;
+            --secondary-gradient: linear-gradient(135deg, #FF6B35 0%, #ff5722 100%);
+            --dark: #111827;
+            --dark-blue: #1e293b;
+            --light: #F8FAFC;
+            --gray: #64748B;
+            --gray-light: #E2E8F0;
+            --gray-lightest: #F1F5F9;
+            --success: #10b981;
+            --error: #ef4444;
+            --warning: #f59e0b;
+            --border-radius-sm: 6px;
+            --border-radius: 12px;
+            --border-radius-lg: 20px;
+            --box-shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.05);
+            --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --box-shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        
+        body {
+            background-color: #fff;
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+            font-size: 16px;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+        
+        a {
+            text-decoration: none;
+            color: var(--primary);
+            transition: var(--transition);
+        }
+        
+        a:hover {
+            color: var(--primary-dark);
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            background: var(--primary-gradient);
+            color: white;
+            border-radius: var(--border-radius-sm);
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            text-align: center;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-dark);
+            z-index: -1;
+            transition: var(--transition);
+            opacity: 0;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--box-shadow);
+        }
+        
+        .btn:hover::before {
+            opacity: 1;
+        }
+        
+        .btn-secondary {
+            background: var(--secondary-gradient);
+        }
+        
+        .btn-secondary::before {
+            background: var(--secondary-dark);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline::before {
+            background: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            color: white;
+        }
+        
+        .btn-lg {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border-radius: var(--border-radius);
+        }
+        
+        /* Header & Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: var(--box-shadow-sm);
+            z-index: 1000;
+            transition: var(--transition);
+        }
+        
+        .header-scrolled {
+            box-shadow: var(--box-shadow);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--dark);
+        }
+        
+        .logo-icon {
+            margin-right: 0.5rem;
+            color: var(--primary);
+            font-size: 1.8rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--dark);
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .contact-btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--border-radius-sm);
+        }
+        
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark);
+        }
+        
+        .mobile-menu {
+            display: none;
+        }
+        
+        .mobile-menu.active {
+            display: block;
+            background: white;
+            padding: 1rem;
+            border-top: 1px solid var(--gray-light);
+        }
+        
+        .mobile-menu ul {
+            list-style: none;
+        }
+        
+        .mobile-menu li {
+            margin: 1rem 0;
+        }
+        
+        .mobile-menu a {
+            display: block;
+            padding: 0.7rem 1rem;
+            color: var(--dark);
+            font-weight: 500;
+            border-radius: var(--border-radius-sm);
+            transition: var(--transition);
+        }
+        
+        .mobile-menu a:hover {
+            background: var(--gray-lightest);
+            color: var(--primary);
+        }
+        
+        .mobile-contact {
+            background: var(--primary-gradient);
+            color: white !important;
+            text-align: center;
+            margin-top: 1rem;
+        }
+        
+        .mobile-contact:hover {
+            background: var(--primary-dark) !important;
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 8rem 0 5rem;
+            background: linear-gradient(135deg, #f0f6ff 0%, #e6f0ff 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 60%;
+            height: 70%;
+            top: -10%;
+            right: -20%;
+            background: linear-gradient(135deg, rgba(53, 99, 233, 0.15) 0%, rgba(53, 99, 233, 0.05) 100%);
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            z-index: 0;
+        }
+        
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 40%;
+            height: 50%;
+            bottom: -20%;
+            left: -10%;
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(255, 107, 53, 0.03) 100%);
+            border-radius: 64% 36% 27% 73% / 55% 58% 42% 45%;
+            z-index: 0;
+        }
+        
+        .hero-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-text {
+            flex: 1;
+            max-width: 600px;
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--dark-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-title span {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--gray);
+            margin-bottom: 2rem;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+            position: relative;
+        }
+        
+        .hero-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow-lg);
+            transition: var(--transition);
+        }
+        
+        .hero-image img:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .hero-stats {
+            display: flex;
+            margin-top: 3rem;
+            gap: 2rem;
+            position: relative;
+        }
+        
+        .hero-stats::before {
+            content: '';
+            position: absolute;
+            top: -1rem;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, var(--primary-light) 0%, transparent 100%);
+            opacity: 0.3;
+        }
+        
+        .stat-item {
+            flex: 1;
+            position: relative;
+        }
+        
+        .stat-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -1rem;
+            height: 100%;
+            width: 1px;
+            background: linear-gradient(180deg, var(--primary-light) 0%, transparent 100%);
+            opacity: 0.3;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-text {
+            font-size: 1rem;
+            color: var(--gray);
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 6rem 0;
+            background-color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .features::before {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            top: -200px;
+            left: -200px;
+            background: linear-gradient(135deg, rgba(53, 99, 233, 0.03) 0%, rgba(53, 99, 233, 0.01) 100%);
+            border-radius: 50%;
+            z-index: 0;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--dark-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--box-shadow-sm);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--gray-light);
+            z-index: 1;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 0;
+            background: linear-gradient(135deg, rgba(53, 99, 233, 0.05) 0%, rgba(53, 99, 233, 0.01) 100%);
+            transition: var(--transition);
+            z-index: -1;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--box-shadow-lg);
+        }
+        
+        .feature-card:hover::before {
+            height: 100%;
+        }
+        
+        .feature-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            border-radius: var(--border-radius);
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, rgba(53, 99, 233, 0.1) 0%, rgba(53, 99, 233, 0.05) 100%);
+            color: var(--primary);
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+        
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1);
+            background: var(--primary-gradient);
+            color: white;
+        }
+        
+        .feature-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            transition: var(--transition);
+        }
+        
+        .feature-card:hover .feature-title {
+            color: var(--primary);
+        }
+        
+        .feature-description {
+            color: var(--gray);
+            transition: var(--transition);
+        }
+        
+        /* App Demo Section */
+        .app-demo {
+            padding: 6rem 0;
+            background-color: var(--light);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .app-demo::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(53, 99, 233, 0.05) 0%, rgba(53, 99, 233, 0.02) 100%);
+            top: -250px;
+            right: -100px;
+            z-index: 0;
+        }
+        
+        .app-demo::after {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.05) 0%, rgba(255, 107, 53, 0.02) 100%);
+            bottom: -150px;
+            left: -50px;
+            z-index: 0;
+        }
+        
+        .app-demo-container {
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .demo-content {
+            flex: 1;
+        }
+        
+        .demo-tabs {
+            display: flex;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--gray-light);
+            gap: 1rem;
+        }
+        
+        .demo-tab {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            position: relative;
+            color: var(--gray);
+            background: none;
+            border: none;
+            transition: var(--transition);
+        }
+        
+        .demo-tab:hover {
+            color: var(--primary);
+        }
+        
+        .demo-tab.active {
+            color: var(--primary);
+        }
+        
+        .demo-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary);
+        }
+        
+        .demo-tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        .demo-tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .demo-screens {
+            flex: 1;
+            position: relative;
+        }
+        
+        .phone-frame {
+            width: 300px;
+            background: var(--dark);
+            border-radius: 40px;
+            padding: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15), 0 0 0 6px rgba(0, 0, 0, 0.05);
+            position: relative;
+            margin: 0 auto;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        
+        .phone-frame:hover {
+            transform: rotateX(10deg) rotateY(10deg);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2), 0 0 0 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .screen {
+            background: white;
+            border-radius: 25px;
+            overflow: hidden;
+            height: 550px;
+            position: relative;
+        }
+        
+        .screen-content {
+            display: none;
+            height: 100%;
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        .screen-content.active {
+            display: block;
+        }
+        
+        .app-header {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .app-body {
+            padding: 1rem;
+            height: calc(100% - 56px);
+            overflow-y: auto;
+        }
+        
+        .app-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow-sm);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--gray-light);
+            transition: var(--transition);
+        }
+        
+        .app-card:hover {
+            box-shadow: var(--box-shadow);
+            transform: translateY(-2px);
+        }
+        
+        .app-button {
+            display: block;
+            width: 100%;
+            background: var(--primary-gradient);
+            color: white;
+            padding: 0.75rem;
+            border-radius: var(--border-radius-sm);
+            text-align: center;
+            margin-top: 1rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .app-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        
+        .stall-list, .transaction-list {
+            margin-top: 1rem;
+        }
+        
+        .stall-item, .transaction-item {
+            padding: 0.75rem;
+            border-radius: var(--border-radius-sm);
+            background: var(--gray-lightest);
+            margin-bottom: 0.5rem;
+            border: 1px solid var(--gray-light);
+            transition: var(--transition);
+        }
+        
+        .stall-item:hover, .transaction-item:hover {
+            background: white;
+            box-shadow: var(--box-shadow-sm);
+        }
+        
+        .payment-form {
+            margin-top: 1rem;
+        }
+        
+        .payment-form input {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: var(--border-radius-sm);
+            border: 1px solid var(--gray-light);
+            margin-bottom: 1rem;
+            transition: var(--transition);
+        }
+        
+        .payment-form input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(53, 99, 233, 0.1);
+        }
+        
+        /* Demo Phone Navigation */
+        .phone-nav {
+            display: flex;
+            justify-content: space-around;
+            background: #f1f3f5;
+            padding: 0.75rem 0;
+            border-radius: 20px;
+            margin-top: 1rem;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+        
+        .nav-item {
+            text-align: center;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .nav-item:hover {
+            color: var(--primary);
+        }
+        
+        .nav-icon {
+            display: block;
+            font-size: 1.2rem;
+            margin-bottom: 0.25rem;
+            color: var(--gray);
+            transition: var(--transition);
+        }
+        
+        .nav-item:hover .nav-icon {
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+        
+        /* How It Works Section */
+        .how-it-works {
+            padding: 6rem 0;
+            background-color: white;
+        }
+        
+        .steps-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 4rem;
+            position: relative;
+        }
+        
+        .steps-container::before {
+            content: '';
+            position: absolute;
+            top: 80px;
+            left: 50px;
+            right: 50px;
+            height: 2px;
+            background-color: var(--gray-light);
+            z-index: 1;
+        }
+        
+        .step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            padding: 0 1rem;
+        }
+        
+        .step-number {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0 auto 2rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .step-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .step-description {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        /* User Benefits Section */
+        .benefits {
+            padding: 6rem 0;
+            background-color: var(--light);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .benefits::before {
+            content: '';
+            position: absolute;
+            width: 40%;
+            height: 40%;
+            background: linear-gradient(135deg, rgba(53, 99, 233, 0.03) 0%, rgba(53, 99, 233, 0.01) 100%);
+            bottom: -20%;
+            right: -10%;
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            z-index: 0;
+        }
+        
+        .benefit-tabs {
+            display: flex;
+            justify-content: center;
+            margin: 3rem 0;
+            gap: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .benefit-tab {
+            padding: 1rem 2rem;
+            background: white;
+            border: 2px solid var(--gray-light);
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .benefit-tab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 0;
+            background: var(--primary-gradient);
+            transition: var(--transition);
+            z-index: -1;
+        }
+        
+        .benefit-tab:hover {
+            color: var(--primary);
+            border-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: var(--box-shadow-sm);
+        }
+        
+        .benefit-tab.active {
+            background: var(--primary-gradient);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: var(--box-shadow);
+        }
+        
+        .benefit-tab.active::before {
+            height: 100%;
+        }
+        
+        .benefit-content {
+            display: none;
+            animation: fadeIn 0.5s ease forwards;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .benefit-content.active {
+            display: block;
+        }
+        
+        .benefit-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .benefit-item {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+            background: white;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow-sm);
+            transition: var(--transition);
+            border: 1px solid var(--gray-light);
+        }
+        
+        .benefit-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--box-shadow);
+        }
+        
+        .benefit-icon {
+            width: 50px;
+            height: 50px;
+            min-width: 50px;
+            border-radius: var(--border-radius-sm);
+            background: linear-gradient(135deg, rgba(53, 99, 233, 0.1) 0%, rgba(53, 99, 233, 0.05) 100%);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+        
+        .benefit-item:hover .benefit-icon {
+            background: var(--primary-gradient);
+            color: white;
+            transform: scale(1.1);
+        }
+        
+        .benefit-text h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            transition: var(--transition);
+        }
+        
+        .benefit-item:hover .benefit-text h4 {
+            color: var(--primary);
+        }
+        
+        .benefit-text p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        /* Roadmap Section */
+        .roadmap {
+            padding: 6rem 0;
+            background-color: white;
+        }
+        
+        .timeline {
+            margin-top: 4rem;
+            position: relative;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 2px;
+            background-color: var(--gray-light);
+            transform: translateX(-50%);
+        }
+        
+        .timeline-item {
+            margin-bottom: 4rem;
+            position: relative;
+        }
+        
+        .timeline-content {
+            width: 45%;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            position: relative;
+            border: 1px solid var(--gray-light);
+        }
+        
+        .timeline-date {
+            position: absolute;
+            top: 0;
+            width: 150px;
+            padding: 0.5rem 1rem;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 20px;
+            text-align: center;
+            font-weight: 600;
+            transform: translateY(-50%);
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-left: auto;
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-date {
+            right: -75px;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-date {
+            left: -75px;
+        }
+        
+        .timeline-icon {
+            position: absolute;
+            top: 1rem;
+            left: 50%;
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+        
+        .timeline-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .timeline-milestone {
+            color: var(--secondary);
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+        
+        /* Investment Section */
+        .investment {
+            padding: 6rem 0;
+            background-color: var(--light);
+        }
+        
+        .investment-card {
+            background: white;
+            border-radius: 12px;
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--gray-light);
+        }
+        
+        .investment-amount {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 1.5rem 0;
+        }
+        
+        .investment-list {
+            text-align: left;
+            margin: 2rem 0;
+        }
+        
+        .investment-item {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        
+        .investment-icon {
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-top: 0.1rem;
+        }
+        
+        .investment-chart {
+            margin: 3rem 0;
+            position: relative;
+            height: 250px;
+        }
+        
+        .chart-bar {
+            position: absolute;
+            bottom: 0;
+            width: 40px;
+            background: var(--primary);
+            border-radius: 8px 8px 0 0;
+        }
+        
+        .chart-bar:nth-child(1) {
+            left: 50px;
+            height: 60px;
+        }
+        
+        .chart-bar:nth-child(2) {
+            left: 120px;
+            height: 100px;
+        }
+        
+        .chart-bar:nth-child(3) {
+            left: 190px;
+            height: 150px;
+        }
+        
+        .chart-bar:nth-child(4) {
+            left: 260px;
+            height: 180px;
+        }
+        
+        .chart-bar:nth-child(5) {
+            left: 330px;
+            height: 220px;
+        }
+        
+        .chart-label {
+            position: absolute;
+            bottom: -25px;
+            text-align: center;
+            width: 40px;
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+        
+        .chart-value {
+            position: absolute;
+            top: -25px;
+            width: 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-align: center;
+        }
+        
+        /* Team Section */
+        .team {
+            padding: 6rem 0;
+            background-color: white;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .team-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border: 1px solid var(--gray-light);
+        }
+        
+        .team-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .team-image {
+            height: 250px;
+            width: 100%;
+            background-color: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            font-size: 4rem;
+        }
+        
+        .team-info {
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .team-name {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .team-role {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .team-social {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-icon {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background-color: var(--gray-light);
+            color: var(--gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        /* CTA Section */
+        .cta {
+            padding: 6rem 0;
+            background-color: var(--primary);
+            color: white;
+            text-align: center;
+        }
+        
+        .cta-title {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .cta-description {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+            opacity: 0.9;
+        }
+        
+        .cta-form {
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+        }
+        
+        .cta-input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border-radius: 8px 0 0 8px;
+            border: none;
+            font-size: 1rem;
+        }
+        
+        .cta-btn {
+            padding: 1rem 1.5rem;
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 0 8px 8px 0;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .cta-btn:hover {
+            background-color: var(--secondary-dark);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 4rem 0 2rem;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+        }
+        
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .footer-description {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .footer-heading {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .footer-heading::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .footer-contact {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 3rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+        
+        /* Media Queries */
+        @media (max-width: 992px) {
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero-text {
+                margin-bottom: 3rem;
+            }
+            
+            .hero-buttons {
+                justify-content: center;
+            }
+            
+            .hero-stats {
+                justify-content: center;
+            }
+            
+            .app-demo-container {
+                flex-direction: column;
+            }
+            
+            .timeline::before {
+                left: 30px;
+            }
+            
+            .timeline-content {
+                width: 85%;
+                margin-left: auto;
+            }
+            
+            .timeline-item:nth-child(odd) .timeline-date,
+            .timeline-item:nth-child(even) .timeline-date {
+                left: 100px;
+                right: auto;
+            }
+            
+            .timeline-icon {
+                left: 30px;
+            }
+            
+            .steps-container::before {
+                display: none;
+            }
+            
+            .steps-container {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            
+            .investment-chart {
+                overflow-x: auto;
+                padding-bottom: 2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .nav-container {
+                padding: 0.8rem 1rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-toggle {
+                display: block;
+            }
+            
+            .mobile-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: white;
+                padding: 1rem;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+                z-index: 100;
+            }
+            
+            .mobile-menu.active {
+                display: block;
+            }
+            
+            .mobile-menu ul {
+                list-style: none;
+            }
+            
+            .mobile-menu li {
+                margin: 1rem 0;
+            }
+            
+            .mobile-menu a {
+                display: block;
+                padding: 0.5rem 0;
+                color: var(--dark);
+                font-weight: 500;
+            }
+            
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .hero-buttons .btn {
+                width: 100%;
+            }
+            
+            .hero-stats {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .section-subtitle {
+                font-size: 1rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .benefit-tabs {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.8rem;
+            }
+            
+            .benefit-tab {
+                width: 100%;
+                max-width: 300px;
+                text-align: center;
+                padding: 0.8rem 1.2rem;
+            }
+            
+            .benefit-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .demo-tabs {
+                overflow-x: auto;
+                white-space: nowrap;
+                padding-bottom: 0.5rem;
+                margin-bottom: 1.5rem;
+                gap: 0;
+            }
+            
+            .demo-tab {
+                padding: 0.8rem 1rem;
+            }
+            
+            .phone-frame {
+                width: 280px;
+                border-width: 6px;
+            }
+            
+            .screen {
+                height: 520px;
+            }
+            
+            .app-card {
+                padding: 0.8rem;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 1.6rem;
+            }
+            
+            .stat-number {
+                font-size: 2rem;
+            }
+            
+            .feature-card {
+                padding: 1.5rem;
+            }
+            
+            .cta-form {
+                flex-direction: column;
+            }
+            
+            .cta-input {
+                width: 100%;
+                border-radius: 8px;
+                margin-bottom: 1rem;
+            }
+            
+            .cta-btn {
+                width: 100%;
+                border-radius: 8px;
+            }
+            
+            .investment-amount {
+                font-size: 2.5rem;
+            }
+            
+            .investment-card {
+                padding: 1.5rem;
+            }
+            
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">💳</span>
+                BootPay
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#demo">App Demo</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#benefits">Benefits</a></li>
+                    <li><a href="#roadmap">Roadmap</a></li>
+                    <li><a href="#investment">Invest</a></li>
+                </ul>
+            </nav>
+            <button class="btn contact-btn">Contact Us</button>
+            <button class="mobile-toggle">☰</button>
+        </div>
+        <div class="mobile-menu">
+            <ul>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#demo">App Demo</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#benefits">Benefits</a></li>
+                <li><a href="#roadmap">Roadmap</a></li>
+                <li><a href="#investment">Invest</a></li>
+                <li><a href="#" class="mobile-contact">Contact Us</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-title">The Universal <span style="color: var(--primary);">Peer-to-Peer</span> Payment Platform</h1>
+                    <p class="hero-subtitle">BootPay is revolutionizing how people buy and sell, from boot fairs to Facebook Marketplace and beyond - making every transaction simple, secure, and instant.</p>
+                    <div class="hero-buttons">
+                        <a href="#demo" class="btn btn-lg">See Demo</a>
+                        <a href="#investment" class="btn btn-outline btn-lg">Invest Now</a>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">£1.5B</div>
+                            <div class="stat-text">Boot Fair Market</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">£8.7B</div>
+                            <div class="stat-text">P2P Marketplace Volume</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">85M+</div>
+                            <div class="stat-text">Potential UK Users</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="/api/placeholder/600/400" alt="BootPay app interface">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Marketplace Integration Section -->
+    <section class="marketplace-integration" id="marketplace-integration" style="padding: 6rem 0; background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Beyond Boot Fairs: The Universal P2P Payment Solution</h2>
+                <p class="section-subtitle">BootPay seamlessly integrates with Facebook Marketplace, eBay, Gumtree, and other peer-to-peer platforms, creating a universal payment gateway for all person-to-person transactions.</p>
+            </div>
+            
+            <div style="display: flex; flex-wrap: wrap; gap: 2rem; margin-top: 3rem; justify-content: center;">
+                <!-- Facebook Marketplace Card -->
+                <div style="flex: 1; min-width: 280px; max-width: 350px; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); transition: all 0.3s ease;">
+                    <div style="height: 160px; background: #1877F2; color: white; display: flex; justify-content: center; align-items: center; font-size: 2.5rem;">
+                        f
+                    </div>
+                    <div style="padding: 1.5rem;">
+                        <h3 style="font-size: 1.3rem; margin-bottom: 1rem;">Facebook Marketplace</h3>
+                        <p style="color: var(--gray); margin-bottom: 1.5rem;">Eliminate awkward cash exchanges and "payment on collection" issues with instant, secure BootPay transactions.</p>
+                        <div style="font-weight: 600; color: var(--primary); display: flex; justify-content: space-between; margin-top: 1rem;">
+                            <span>44M+ UK Users</span>
+                            <span>→</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- eBay Card -->
+                <div style="flex: 1; min-width: 280px; max-width: 350px; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); transition: all 0.3s ease;">
+                    <div style="height: 160px; background: #e53238; color: white; display: flex; justify-content: center; align-items: center; font-size: 2rem; font-weight: 700;">
+                        eBay
+                    </div>
+                    <div style="padding: 1.5rem;">
+                        <h3 style="font-size: 1.3rem; margin-bottom: 1rem;">eBay Local Pickup</h3>
+                        <p style="color: var(--gray); margin-bottom: 1.5rem;">Add BootPay as a payment option for local pickups, avoiding cash handling while maintaining the personal exchange.</p>
+                        <div style="font-weight: 600; color: var(--primary); display: flex; justify-content: space-between; margin-top: 1rem;">
+                            <span>18M+ UK Users</span>
+                            <span>→</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Gumtree Card -->
+                <div style="flex: 1; min-width: 280px; max-width: 350px; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05); transition: all 0.3s ease;">
+                    <div style="height: 160px; background: #72ef36; color: white; display: flex; justify-content: center; align-items: center; font-size: 2rem; font-weight: 700;">
+                        Gumtree
+                    </div>
+                    <div style="padding: 1.5rem;">
+                        <h3 style="font-size: 1.3rem; margin-bottom: 1rem;">Gumtree</h3>
+                        <p style="color: var(--gray); margin-bottom: 1.5rem;">Transform Gumtree's local sales with secure, in-person digital payments, eliminating the need for exact cash amounts.</p>
+                        <div style="font-weight: 600; color: var(--primary); display: flex; justify-content: space-between; margin-top: 1rem;">
+                            <span>16M+ UK Users</span>
+                            <span>→</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- P2P Integration Benefits -->
+            <div style="margin-top: 4rem; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);">
+                <div style="padding: 2rem; text-align: center;">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">The Universal Peer-to-Peer Payment Experience</h3>
+                    <p style="color: var(--gray); max-width: 800px; margin: 0 auto 2rem;">BootPay creates a seamless bridge between online marketplaces and in-person transactions, solving the "last mile" payment problem.</p>
+                    
+                    <div style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center; text-align: left;">
+                        <div style="flex: 1; min-width: 280px;">
+                            <div style="margin-bottom: 1.5rem;">
+                                <div style="display: flex; align-items: center; margin-bottom: 0.5rem;">
+                                    <span style="display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; background: var(--primary); color: white; margin-right: 0.5rem; flex-shrink: 0; font-size: 0.8rem;">1</span>
+                                    <span style="font-weight: 600;">List Item Online</span>
+                                </div>
+                                <p style="padding-left: 34px; color: var(--gray); font-size: 0.9rem;">List your item on Facebook Marketplace, eBay, Gumtree or any other platform as usual.</p>
+                            </div>
+                            
+                            <div style="margin-bottom: 1.5rem;">
+                                <div style="display: flex; align-items: center; margin-bottom: 0.5rem;">
+                                    <span style="display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; background: var(--primary); color: white; margin-right: 0.5rem; flex-shrink: 0; font-size: 0.8rem;">2</span>
+                                    <span style="font-weight: 600;">Specify "BootPay"</span>
+                                </div>
+                                <p style="padding-left: 34px; color: var(--gray); font-size: 0.9rem;">Indicate BootPay as your preferred payment method for in-person transactions.</p>
+                            </div>
+                        </div>
+                        
+                        <div style="flex: 1; min-width: 280px;">
+                            <div style="margin-bottom: 1.5rem;">
+                                <div style="display: flex; align-items: center; margin-bottom: 0.5rem;">
+                                    <span style="display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; background: var(--primary); color: white; margin-right: 0.5rem; flex-shrink: 0; font-size: 0.8rem;">3</span>
+                                    <span style="font-weight: 600;">Meet In Person</span>
+                                </div>
+                                <p style="padding-left: 34px; color: var(--gray); font-size: 0.9rem;">Meet the buyer/seller as you normally would for the item exchange.</p>
+                            </div>
+                            
+                            <div style="margin-bottom: 1.5rem;">
+                                <div style="display: flex; align-items: center; margin-bottom: 0.5rem;">
+                                    <span style="display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; background: var(--primary); color: white; margin-right: 0.5rem; flex-shrink: 0; font-size: 0.8rem;">4</span>
+                                    <span style="font-weight: 600;">Tap to Pay</span>
+                                </div>
+                                <p style="padding-left: 34px; color: var(--gray); font-size: 0.9rem;">Complete the transaction with a simple tap-to-pay, no cash or bank transfers needed.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quick Stats -->
+            <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; margin-top: 3rem; justify-content: center;">
+                <div style="flex: 1; min-width: 200px; max-width: 300px; background: var(--primary); color: white; padding: 2rem; border-radius: 12px; text-align: center;">
+                    <div style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">67%</div>
+                    <div>of marketplace transactions fail due to payment complications</div>
+                </div>
+                
+                <div style="flex: 1; min-width: 200px; max-width: 300px; background: var(--primary); color: white; padding: 2rem; border-radius: 12px; text-align: center;">
+                    <div style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">£4.3B</div>
+                    <div>in potential transactions completed with BootPay integration</div>
+                </div>
+                
+                <div style="flex: 1; min-width: 200px; max-width: 300px; background: var(--primary); color: white; padding: 2rem; border-radius: 12px; text-align: center;">
+                    <div style="font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem;">92%</div>
+                    <div>of users prefer digital payments for marketplace pickups</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">A Universal Payment Ecosystem</h2>
+                <p class="section-subtitle">BootPay connects all forms of peer-to-peer commerce, from boot fairs to Facebook Marketplace, providing a seamless payment experience for every person-to-person transaction.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3 class="feature-title">NFC Payments</h3>
+                    <p class="feature-description">Instant tap-to-pay functionality allows customers to make purchases without signing up, making transactions quick and frictionless.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎟️</div>
+                    <h3 class="feature-title">Gate Fee Collection</h3>
+                    <p class="feature-description">Digital entrance tickets and fast-track lanes for app users, allowing boot fair organizers to efficiently collect and track gate fees.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h3 class="feature-title">Marketplace Integration</h3>
+                    <p class="feature-description">Seamlessly connect with Facebook Marketplace, eBay, Gumtree and other P2P platforms for secure in-person payments.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="feature-title">Sales Analytics</h3>
+                    <p class="feature-description">Comprehensive reporting and analytics for stallholders to track sales performance and customer preferences over time.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3 class="feature-title">Secure Transactions</h3>
+                    <p class="feature-description">End-to-end encryption and fraud detection systems ensure all payments are secure and compliant with regulations.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3 class="feature-title">Customer Accounts</h3>
+                    <p class="feature-description">Optional account creation for customers who want to track their purchase history and receive personalized recommendations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- App Demo Section -->
+    <section class="app-demo" id="demo">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Experience BootPay in Action</h2>
+                <p class="section-subtitle">Explore our intuitive interfaces for boot fair organizers, stallholders, and customers.</p>
+            </div>
+            <div class="app-demo-container">
+                <div class="demo-content">
+                    <div class="demo-tabs">
+                        <button class="demo-tab active" data-tab="organizer">Organizer</button>
+                        <button class="demo-tab" data-tab="stallholder">Stallholder</button>
+                        <button class="demo-tab" data-tab="customer">Customer</button>
+                    </div>
+                    <div id="organizer-info" class="demo-tab-content active">
+                        <h3>Boot Fair Organizer Dashboard</h3>
+                        <p>Manage your boot fair events, track stall bookings, and monitor entrance fee collections in real-time. Get valuable insights into attendance and revenue trends.</p>
+                        <ul style="margin-top: 1rem; margin-left: 1.5rem;">
+                            <li>Set up new boot fair events with customizable stall prices</li>
+                            <li>Track stall bookings and payments</li>
+                            <li>Monitor entrance fee collections in real-time</li>
+                            <li>Access detailed financial reports and analytics</li>
+                            <li>Communicate with stallholders through the app</li>
+                        </ul>
+                    </div>
+                    <div id="stallholder-info" class="demo-tab-content">
+                        <h3>Stallholder Sales Platform</h3>
+                        <p>Accept cashless payments, track your sales, and build your customer base. BootPay makes it easy to manage your stall and grow your business.</p>
+                        <ul style="margin-top: 1rem; margin-left: 1.5rem;">
+                            <li>Book and pay for stall spaces in advance</li>
+                            <li>Accept card payments and NFC transactions</li>
+                            <li>Track sales and inventory in real-time</li>
+                            <li>Build a digital presence with ratings and reviews</li>
+                            <li>Access historical sales data and trends</li>
+                        </ul>
+                    </div>
+                    <div id="customer-info" class="demo-tab-content">
+                        <h3>Customer Shopping Experience</h3>
+                        <p>Shop cashless at boot fairs with NFC tap-to-pay or account-based payments. Find quality stallholders and keep track of your purchases.</p>
+                        <ul style="margin-top: 1rem; margin-left: 1.5rem;">
+                            <li>Pay with NFC technology - no signup required</li>
+                            <li>Create an optional account to track purchases</li>
+                            <li>Discover top-rated stallholders and items</li>
+                            <li>Purchase entrance tickets in advance</li>
+                            <li>Receive digital receipts for all transactions</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="demo-screens">
+                    <div class="phone-frame">
+                        <div class="screen">
+                            <!-- Organizer Screen -->
+                            <div class="screen-content active" id="organizer-screen">
+                                <div class="app-header">
+                                    BootPay Organizer
+                                </div>
+                                <div class="app-body">
+                                    <div class="app-card">
+                                        <h4>Today's Event: Riverside Boot Fair</h4>
+                                        <p>Date: Sunday, April 13, 2025</p>
+                                        <p>Time: 8:00 AM - 2:00 PM</p>
+                                        <p>Location: Riverside Park</p>
+                                    </div>
+                                    <div class="app-card">
+                                        <h4>Real-time Stats</h4>
+                                        <div style="display: flex; justify-content: space-between; margin-top: 0.5rem;">
+                                            <div style="text-align: center;">
+                                                <div style="font-size: 1.5rem; font-weight: 600; color: var(--primary);">87</div>
+                                                <div style="font-size: 0.8rem;">Stalls Booked</div>
+                                            </div>
+                                            <div style="text-align: center;">
+                                                <div style="font-size: 1.5rem; font-weight: 600; color: var(--primary);">£870</div>
+                                                <div style="font-size: 0.8rem;">Stall Revenue</div>
+                                            </div>
+                                            <div style="text-align: center;">
+                                                <div style="font-size: 1.5rem; font-weight: 600; color: var(--primary);">£1,240</div>
+                                                <div style="font-size: 0.8rem;">Gate Revenue</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="app-card">
+                                        <h4>Stall Bookings</h4>
+                                        <div class="stall-list">
+                                            <div class="stall-item">
+                                                <strong>Stall #42</strong> - Sarah's Vintage
+                                                <div style="font-size: 0.8rem; color: var(--gray);">Paid: £10.00 - Standard size</div>
+                                            </div>
+                                            <div class="stall-item">
+                                                <strong>Stall #43</strong> - Mike's Collectibles
+                                                <div style="font-size: 0.8rem; color: var(--gray);">Paid: £10.00 - Standard size</div>
+                                            </div>
+                                            <div class="stall-item">
+                                                <strong>Stall #44</strong> - Vintage Treasures
+                                                <div style="font-size: 0.8rem; color: var(--gray);">Paid: £15.00 - Premium corner</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="app-button">Create New Event</button>
+                                </div>
+                                <div class="phone-nav">
+                                    <div class="nav-item">
+                                        <span class="nav-icon">📊</span>
+                                        Dashboard
+                                    </div>
+                                    <div class="nav-item">
+                                        <span class="nav-icon">🎟️</span>
+                                        Gate
+                                    </div>
+                                    <div class="nav-item">
+                                        <span class="nav-icon">🏪</span>
+                                        Stalls
+                                    </div>
+                                    <div class="nav-item">
+                                        <span class="nav-icon">⚙️</span>
+                                        Settings
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Stallholder Screen -->
+                            <div class="screen-content" id="stallholder-screen">
+                                <div class="app-header">
+                                    BootPay Stallholder
+                                </div>
+                                <div class="app-body">
+                                    <div class="app-card">
+                                        <h4>Today's Sales: £187.50</h4>
+                                        <p>Transactions: 15</p>
+                                        <p>Average Sale: £12.50</p>
+                                    </div>
+                                    <div class="app-card">
+                                        <h4>Accept Payment</h4>
+                                        <div class="payment-form">
+                                            <input type="text" placeholder="Amount (£)">
+                                            <input type="text" placeholder="Item Description (optional)">
+                                            <button class="app-button">Generate Payment</button>
+                                        </div>
+                                    </div>
+                                    <div class="app-card">
+                                        <h4>Recent Transactions</h4>
+                                        <div class="transaction-list">
+                                            <div class="transaction-item">
+                                                <strong>£25.00</strong> - Vintage Lamp
+                                                <div style="font-size: 0.8rem; color: var(--gray);">11:42 AM - NFC Payment</div>
+                                            </div>
+                                            <div class="transaction-item">
+                                                <strong>£8.50</strong> - Comic Books (3)
+                                                <div style="font-size: 0.8rem; color: var(--gray);">10:57 AM - Account Payment</div>
+                                            </div>
+                                            <div class="transaction-item">
+                                                <strong>£15.00</strong> - Ceramic Vase
+                                                <div style="font-size: 0.8rem; color: var(--gray);">10:23 AM - NFC Payment</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="phone-nav">
+                                    <div class="nav-item">
+                                        <span class="nav-icon">🏠</span>
+                                        Home
+                                    </div>
+                                    <div class="nav-item">
+                                        <span class="nav-icon">💳</span>
+                                        Payments
+                                    </div>
+                                    <div class="nav-item">
+                                        <span class="nav-icon">📊</span>
+                                        Reports
+                                    </div>
+                                    <div class="nav-item">
+                                        <span class="nav-icon">⚙️</span>
+                                        Settings
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Customer Screen -->
+                            <div class="screen-content" id="customer-screen">
+                                <div class="app-header">
+                                    BootPay Customer
+                                </div>
+                                <div class="app-body">
+                                    <div class="app-card">
+                                        <h4>Riverside Boot Fair</h4>
+                                        <p>Sunday, April 13, 2025</p>
+                                        <p>Gate Entry: £2.00 (Pre-paid)</p>
+                                        <div style="display: flex; justify-content: center; margin-top: 1rem;">
+                                            <div style="width: 150px; height: 150px; background: #f1f3f5; display: flex; justify-content: center; align-items: center; border-radius: 10px; border: 1px dashed #ced4da;">
+                                                QR Code
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="app-card">
+                                        <h4>Quick Pay</h4>
+                                        <p>Tap your phone to a stallholder's device to make an instant payment.</p>
+                                        <button class="app-button">Activate NFC Payment</button>
+                                    </div>
+                                    <div class="app-card">
+                                        <h4>Today's Purchases</h4>
+                                        <div class="transaction-list">
+                                            <div class="transaction-item">
+                                                <strong>£25.00</strong> - Sarah's Vintage
+                                                <div style="font-size: 0.8rem; color: var(--gray);">Vintage Lamp - 11:42 AM</div>
+                                            </div>
+                                            <div class="transaction-item">
+                                                <strong>£8.50</strong> - Mike's Collectibles
+                                                <div style="font-size: 0.8rem; color: var(--gray);">Comic Books (3) - 10:57 AM</div>
+                                            </div>
+                                            <div class="transaction-item">
+                                                <strong>£2.00</strong> - Gate Entry
+                                                <div style="font-size: 0.8rem; color: var(--gray);">Riverside Boot Fair - 9:15 AM</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="phone-nav">
+                                    <div class="nav-item">
+                                        <span class="nav-icon">🏠</span>
+                                        Home
+                                    </div>
+                                    <div class="nav-item">
+                                        <span class="nav-icon">💳</span>
+                                        Pay
+                                    </div>
+                                    <div class="nav-item">
+                                        <span class="nav-icon">🔍</span>
+                                        Explore
+                                    </div>
+                                    <div class="nav-item">
+                                        <span class="nav-icon">👤</span>
+                                        Profile
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">How BootPay Works</h2>
+                <p class="section-subtitle">Our seamless ecosystem connects boot fair organizers, stallholders, and customers in one comprehensive platform.</p>
+            </div>
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">Organizer Setup</h3>
+                    <p class="step-description">Boot fair organizers create events, set stall prices, and configure entrance fees through their dedicated dashboard.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">Stallholder Registration</h3>
+                    <p class="step-description">Stallholders book and pay for their spaces in advance or on the day, receiving digital receipts and location assignments.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">Customer Arrival</h3>
+                    <p class="step-description">Visitors pay entrance fees through the app or at the gate, receiving digital tickets for fast-track entry.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3 class="step-title">Seamless Transactions</h3>
+                    <p class="step-description">Customers make cashless purchases using NFC tap-to-pay or through their BootPay accounts.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- User Benefits Section -->
+    <section class="benefits" id="benefits">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Benefits for All Stakeholders</h2>
+                <p class="section-subtitle">BootPay delivers unique advantages to boot fair organizers, stallholders, and customers alike.</p>
+            </div>
+            <div class="benefit-tabs">
+                <div class="benefit-tab active" data-benefit="organizers">Boot Fairs</div>
+                <div class="benefit-tab" data-benefit="stallholders">Marketplaces</div>
+                <div class="benefit-tab" data-benefit="customers">Users</div>
+            </div>
+            <div class="benefit-content active" id="organizers-content">
+                <div class="benefit-grid">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">💸</div>
+                        <div class="benefit-text">
+                            <h4>Streamlined Fee Collection</h4>
+                            <p>Collect stall fees and entrance payments digitally, eliminating cash handling risks and administrative burdens.</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">📊</div>
+                        <div class="benefit-text">
+                            <h4>Comprehensive Analytics</h4>
+                            <p>Gain valuable insights into attendance patterns, popular stallholders, and revenue trends over time.</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">🏪</div>
+                        <div class="benefit-text">
+                            <h4>Efficient Stall Management</h4>
+                            <p>Digitally manage stall allocations, visualize layout, and track bookings in real-time.</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">📣</div>
+                        <div class="benefit-text">
+                            <h4>Marketing Tools</h4>
+                            <p>Promote events to app users and send notifications about upcoming boot fairs to drive attendance.</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">⏱️</div>
+                        <div class="benefit-text">
+                            <h4>Time Savings</h4>
+                            <p>Reduce administrative overhead with automated payment reconciliation and digital record-keeping.</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">📱</div>
+                        <div class="benefit-text">
+                            <h4>Customer Database</h4>
+                            <p>Build a database of regular visitors to improve marketing effectiveness and boost repeat attendance.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="benefit-content" id="stallholders-content">
+                <div class="benefit-grid">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">💳</div>
+                        <div class="benefit-text">
+                            <h4>Cashless Sales</h4>
+                            <p>Accept card and NFC payments, eliminating the need to handle cash and expanding your customer base.</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">📊</div>
+                        <div class="benefit-text">
+                            <h4>Sales Tracking</h4>
+                            <p>Monitor your performance with detailed sales analytics and transaction history.</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">🔒</div>
+                        <div class="benefit-text">
+                            <h4>Enhanced Security</h4>
+                            <p>Reduce the risk of theft or loss by minimizing cash handling at your stall.</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">⭐</div>
+                        <div class="benefit-text">
+                            <h4>Digital Reputation</h4>
+                            <p>Build a ratings-based profile that helps you stand out and attract more customers.</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">📝</div>
+                        <div class="benefit-text">
+                            <h4>Simplified Bookkeeping</h4>
+                            <p>Automatically generate financial records for tax purposes and business planning.</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">🏪</div>
+                        <div class="benefit-text">
+                            <h4>Easy Stall Booking</h4>
+                            <p>Book your preferred stall locations in advance through the app.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="benefit-content" id="customers-content">
+                <div class="benefit-grid">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">💳</div>
+                        <div class="benefit-text">
+                            <h4>Cashless Shopping</h4>
+                            <p>Make purchases without carrying cash, using NFC tap-to-pay or your BootPay account.</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">🎟️</div>
+                        <div class="benefit-text">
+                            <h4>Digital Tickets</h4>
+                            <p>Purchase entrance tickets in advance and enjoy fast-track entry to boot fairs.</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">🔍</div>
+                        <div class="benefit-text">
+                            <h4>Stallholder Discovery</h4>
+                            <p>Find top-rated stallholders and discover unique items through the app.</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">📝</div>
+                        <div class="benefit-text">
+                            <h4>Purchase History</h4>
+                            <p>Keep track of all your boot fair purchases with digital receipts and transaction records.</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">🔒</div>
+                        <div class="benefit-text">
+                            <h4>Secure Transactions</h4>
+                            <p>Shop with confidence knowing all payments are securely processed and protected.</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">🎁</div>
+                        <div class="benefit-text">
+                            <h4>Loyalty Rewards</h4>
+                            <p>Earn points for cashless payments and unlock exclusive offers and discounts.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap Section -->
+    <section class="roadmap" id="roadmap">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Product Roadmap</h2>
+                <p class="section-subtitle">Our strategic development plan to revolutionize the boot fair industry.</p>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">Phase 1: Months 1-4</div>
+                        <h3 class="timeline-title">Foundation</h3>
+                        <p>Development of core app functionality for all user types, payment processing integration, and basic reporting capabilities.</p>
+                        <p class="timeline-milestone">Milestone: MVP launch with 5 boot fair partnerships</p>
+                    </div>
+                    <div class="timeline-icon">1</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">Phase 2: Months 5-8</div>
+                        <h3 class="timeline-title">Market Entry</h3>
+                        <p>NFC payment rollout, enhanced organizer dashboard, marketing campaign launch, and expansion to 25 boot fairs.</p>
+                        <p class="timeline-milestone">Milestone: 10,000 transactions processed</p>
+                    </div>
+                    <div class="timeline-icon">2</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">Phase 3: Months 9-12</div>
+                        <h3 class="timeline-title">Marketplace Integration</h3>
+                        <p>Integration with Facebook Marketplace, eBay, and Gumtree for seamless peer-to-peer transactions, expanding beyond boot fairs to all in-person commerce.</p>
+                        <p class="timeline-milestone">Milestone: API integrations with 3 major marketplace platforms</p>
+                    </div>
+                    <div class="timeline-icon">3</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">Phase 4: Months 13-18</div>
+                        <h3 class="timeline-title">Market Expansion</h3>
+                        <p>API development for third-party integration, expansion to adjacent markets (farmers markets, craft fairs), enhanced promotional tools.</p>
+                        <p class="timeline-milestone">Milestone: 250 active boot fairs, £5M monthly transaction volume</p>
+                    </div>
+                    <div class="timeline-icon">4</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-date">Phase 5: Months 19-24</div>
+                        <h3 class="timeline-title">Ecosystem Development</h3>
+                        <p>Marketplace features for pre-event sales, inventory management system, international pilot programs, and additional revenue stream activation.</p>
+                        <p class="timeline-milestone">Milestone: £50M cumulative transaction volume, path to profitability</p>
+                    </div>
+                    <div class="timeline-icon">5</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Investment Section -->
+    <section class="investment" id="investment">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Investment Opportunity</h2>
+                <p class="section-subtitle">Join us in transforming the £1.5 billion boot fair industry with a revolutionary payment platform.</p>
+            </div>
+            <div class="investment-card">
+                <h3>Seed Funding Round</h3>
+                    <div style="font-size: 3.5rem; font-weight: 800; color: var(--primary); margin: 1.5rem 0;">£8.7B+</div>
+                    <p>Total Addressable Market with P2P Marketplaces</p>
+                <div class="investment-list">
+                    <div class="investment-item">
+                        <div class="investment-icon">✓</div>
+                        <div>
+                            <strong>Massive Market Expansion:</strong> From £1.5B boot fair market to £8.7B+ total peer-to-peer marketplace opportunity.
+                        </div>
+                    </div>
+                    <div class="investment-item">
+                        <div class="investment-icon">✓</div>
+                        <div>
+                            <strong>Multi-Sided Revenue Model:</strong> Subscriptions from boot fair organizers, transaction fees from stallholders, and premium services.
+                        </div>
+                    </div>
+                    <div class="investment-item">
+                        <div class="investment-icon">✓</div>
+                        <div>
+                            <strong>Rapid Growth Trajectory:</strong> From 75 boot fairs in Year 1 to 1,200+ by Year 5.
+                        </div>
+                    </div>
+                    <div class="investment-item">
+                        <div class="investment-icon">✓</div>
+                        <div>
+                            <strong>Clear Path to Profitability:</strong> Break-even projected in Month 22 with strong margins by Year 3.
+                        </div>
+                    </div>
+                    <div class="investment-item">
+                        <div class="investment-icon">✓</div>
+                        <div>
+                            <strong>Expansion Potential:</strong> Natural growth into adjacent markets like farmers markets, craft fairs, and international boot fair equivalents.
+                        </div>
+                    </div>
+                </div>
+                <h4>Projected Financial Growth</h4>
+                <div class="investment-chart">
+                    <div class="chart-bar" style="left: 50px; height: 60px;">
+                        <div class="chart-label">Year 1</div>
+                        <div class="chart-value">£220K</div>
+                    </div>
+                    <div class="chart-bar" style="left: 120px; height: 100px;">
+                        <div class="chart-label">Year 2</div>
+                        <div class="chart-value">£980K</div>
+                    </div>
+                    <div class="chart-bar" style="left: 190px; height: 150px;">
+                        <div class="chart-label">Year 3</div>
+                        <div class="chart-value">£2.5M</div>
+                    </div>
+                    <div class="chart-bar" style="left: 260px; height: 180px;">
+                        <div class="chart-label">Year 4</div>
+                        <div class="chart-value">£4.9M</div>
+                    </div>
+                    <div class="chart-bar" style="left: 330px; height: 220px;">
+                        <div class="chart-label">Year 5</div>
+                        <div class="chart-value">£8.2M</div>
+                    </div>
+                </div>
+                <a href="#" class="btn btn-lg btn-secondary">Request Investor Deck</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team" id="team">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Our Team</h2>
+                <p class="section-subtitle">We're building a world-class team of payment, marketplace, and retail experts to revolutionize the boot fair industry.</p>
+            </div>
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="team-image">👤</div>
+                    <div class="team-info">
+                        <h3 class="team-name">Gary Crowhurst</h3>
+                        <p class="team-role">Founder & CEO</p>
+                        <p>Avid bootfair goer and marketplace user wanting to solve the peer to peer payment issues.</p>
+                        <div class="team-social">
+                            <a href="mailto:gary@bootpay.co.uk" class="social-icon">📧</a>
+                            <a href="tel:+447592113218" class="social-icon">📱</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="team-card">
+                    <div class="team-image">👤</div>
+                    <div class="team-info">
+                        <h3 class="team-name">[Seeking]</h3>
+                        <p class="team-role">Chief Technology Officer</p>
+                        <p>Mobile platform architecture expert with payments experience.</p>
+                        <div class="team-social">
+                            <a href="#" class="social-icon">in</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="team-card">
+                    <div class="team-image">👤</div>
+                    <div class="team-info">
+                        <h3 class="team-name">[Seeking]</h3>
+                        <p class="team-role">Chief Operating Officer</p>
+                        <p>Operations leader with event management background.</p>
+                        <div class="team-social">
+                            <a href="#" class="social-icon">in</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="team-card">
+                    <div class="team-image">👤</div>
+                    <div class="team-info">
+                        <h3 class="team-name">[Seeking]</h3>
+                        <p class="team-role">Head of Sales</p>
+                        <p>SaaS sales leader with marketplace experience.</p>
+                        <div class="team-social">
+                            <a href="#" class="social-icon">in</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2 class="cta-title">Ready to Join the BootPay Revolution?</h2>
+            <p class="cta-description">Whether you're an investor, boot fair organizer, or technology partner, we'd love to hear from you.</p>
+            <form class="cta-form">
+                <input type="email" class="cta-input" placeholder="Enter your email address">
+                <button type="submit" class="cta-btn">Get in Touch</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div>
+                    <div class="footer-logo">
+                        <span style="color: var(--primary); margin-right: 0.5rem;">💳</span> BootPay
+                    </div>
+                    <p class="footer-description">Revolutionizing boot fair payments with a comprehensive platform for organizers, stallholders, and customers.</p>
+                    <div class="footer-social">
+                        <a href="#" class="social-icon">in</a>
+                        <a href="#" class="social-icon">f</a>
+                        <a href="#" class="social-icon">📷</a>
+                        <a href="#" class="social-icon">🐦</a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="footer-heading">Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Our Team</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press Kit</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-heading">Product</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Roadmap</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-heading">Contact</h4>
+                    <div class="footer-contact">
+                        <div class="contact-icon">📧</div>
+                        <div>gary@bootpay.co.uk</div>
+                    </div>
+                    <div class="footer-contact">
+                        <div class="contact-icon">📱</div>
+                        <div>+44 7592 113218</div>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2025 BootPay. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Demo Tabs
+        const demoTabs = document.querySelectorAll('.demo-tab');
+        const screenContents = document.querySelectorAll('.screen-content');
+        const tabContents = document.querySelectorAll('.demo-tab-content');
+        
+        demoTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const target = tab.getAttribute('data-tab');
+                
+                // Update tabs
+                demoTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // Update tab content
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                    content.style.display = 'none';
+                });
+                
+                const activeContent = document.getElementById(`${target}-info`);
+                activeContent.style.display = 'block';
+                setTimeout(() => {
+                    activeContent.classList.add('active');
+                }, 10);
+                
+                // Update screen
+                screenContents.forEach(screen => {
+                    screen.classList.remove('active');
+                    screen.style.display = 'none';
+                });
+                
+                const activeScreen = document.getElementById(`${target}-screen`);
+                activeScreen.style.display = 'block';
+                setTimeout(() => {
+                    activeScreen.classList.add('active');
+                }, 10);
+            });
+        });
+        
+        // Benefit Tabs
+        const benefitTabs = document.querySelectorAll('.benefit-tab');
+        const benefitContents = document.querySelectorAll('.benefit-content');
+        
+        benefitTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const target = tab.getAttribute('data-benefit');
+                
+                // Update tabs
+                benefitTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // Update content
+                benefitContents.forEach(content => {
+                    content.classList.remove('active');
+                    content.style.display = 'none';
+                });
+                
+                const activeContent = document.getElementById(`${target}-content`);
+                activeContent.style.display = 'block';
+                setTimeout(() => {
+                    activeContent.classList.add('active');
+                }, 10);
+            });
+        });
+        
+        // Mobile Menu Toggle
+        const mobileToggle = document.querySelector('.mobile-toggle');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        
+        mobileToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+        });
+        
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+            });
+        });
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.mobile-menu') && !e.target.closest('.mobile-toggle')) {
+                mobileMenu.classList.remove('active');
+            }
+        });
+        
+        // Sticky Header
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('header-scrolled');
+            } else {
+                header.classList.remove('header-scrolled');
+            }
+        });
+        
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Phone Frame Animation
+        const phoneFrame = document.querySelector('.phone-frame');
+        
+        phoneFrame.addEventListener('mousemove', (e) => {
+            const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+            const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+            phoneFrame.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+        });
+        
+        phoneFrame.addEventListener('mouseenter', () => {
+            phoneFrame.style.transition = 'none';
+        });
+        
+        phoneFrame.addEventListener('mouseleave', () => {
+            phoneFrame.style.transition = 'all 0.5s ease';
+            phoneFrame.style.transform = 'rotateY(0deg) rotateX(0deg)';
+        });
+        
+        // App Card Hover Effect
+        const appCards = document.querySelectorAll('.app-card');
+        
+        appCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-5px)';
+                card.style.boxShadow = '0 10px 20px rgba(0, 0, 0, 0.1)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+                card.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.05)';
+            });
+        });
+        
+        // Feature Card Animation
+        const featureCards = document.querySelectorAll('.feature-card');
+        
+        featureCards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                const icon = card.querySelector('.feature-icon');
+                icon.style.transform = 'scale(1.1)';
+                icon.style.background = 'var(--primary-gradient)';
+                icon.style.color = 'white';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                const icon = card.querySelector('.feature-icon');
+                icon.style.transform = 'scale(1)';
+                icon.style.background = 'linear-gradient(135deg, rgba(53, 99, 233, 0.1) 0%, rgba(53, 99, 233, 0.05) 100%)';
+                icon.style.color = 'var(--primary)';
+            });
+        });
+        
+        // Adjust viewport for mobile devices to prevent zooming
+        const viewportMeta = document.createElement('meta');
+        viewportMeta.name = 'viewport';
+        viewportMeta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0';
+        document.getElementsByTagName('head')[0].appendChild(viewportMeta);
+        
+        // Add touch event listeners for better mobile interaction
+        const addTouchSupport = () => {
+            // Make buttons more responsive on touch devices
+            const allButtons = document.querySelectorAll('.btn, .app-button, .benefit-tab, .demo-tab');
+            allButtons.forEach(button => {
+                button.addEventListener('touchstart', function() {
+                    this.style.transform = 'scale(0.98)';
+                });
+                button.addEventListener('touchend', function() {
+                    this.style.transform = 'none';
+                });
+            });
+        };
+        
+        // Call touch support function
+        document.addEventListener('DOMContentLoaded', addTouchSupport);
+        
+        // Initialize the active tab content on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set initial active tab content for demo
+            const initialDemoTab = document.querySelector('.demo-tab.active');
+            if (initialDemoTab) {
+                const target = initialDemoTab.getAttribute('data-tab');
+                document.getElementById(`${target}-info`).classList.add('active');
+                document.getElementById(`${target}-info`).style.display = 'block';
+                document.getElementById(`${target}-screen`).classList.add('active');
+                document.getElementById(`${target}-screen`).style.display = 'block';
+            }
+            
+            // Set initial active tab content for benefits
+            const initialBenefitTab = document.querySelector('.benefit-tab.active');
+            if (initialBenefitTab) {
+                const target = initialBenefitTab.getAttribute('data-benefit');
+                document.getElementById(`${target}-content`).classList.add('active');
+                document.getElementById(`${target}-content`).style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
